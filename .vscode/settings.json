@@ -1,0 +1,12 @@
+{
+    "cmake.configureOnOpen": false,
+    "cmake.buildBeforeRun": true,
+    "cmake.statusbar.advanced": {
+        "debug": {
+            "visibility": "hidden"
+        },
+        "launch": {
+            "visibility": "hidden"
+        }
+    }
+}

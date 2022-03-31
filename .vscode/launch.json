@@ -1,0 +1,84 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "JLink GDB",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "executable": "${command:cmake.launchTargetPath}",
+            "servertype": "jlink",
+            "serverpath": "/Applications/SEGGER/JLink/JLinkGDBServer",
+            "serverArgs": [
+                "-speed",
+                "${env:JL_SPEED}"
+            ],
+            "device": "${env:JL_DEVICE}",
+            "interface": "swd",
+            "gdbPath": "/opt/homebrew/bin/arm-none-eabi-gdb",
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd"
+        },
+        {
+            "name": "JLink GDB (RTT)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "executable": "${command:cmake.launchTargetPath}",
+            "servertype": "jlink",
+            "serverpath": "/Applications/SEGGER/JLink/JLinkGDBServer",
+            "serverArgs": [
+                "-speed",
+                "${env:JL_SPEED}"
+            ],
+            "device": "${env:JL_DEVICE}",
+            "interface": "swd",
+            "gdbPath": "/opt/homebrew/bin/arm-none-eabi-gdb",
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "decoders": [
+                    {
+                        "port": 0,
+                        "type": "console"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "JLink GDB (Semihosting)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "executable": "${command:cmake.launchTargetPath}",
+            "servertype": "jlink",
+            "serverpath": "/Applications/SEGGER/JLink/JLinkGDBServer",
+            "serverArgs": [
+                "-speed",
+                "${env:JL_SPEED}",
+                "-telnetport",
+                "3334"
+            ],
+            "device": "${env:JL_DEVICE}",
+            "interface": "swd",
+            "gdbPath": "/opt/homebrew/bin/arm-none-eabi-gdb",
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
+            "preLaunchCommands": [
+                "monitor semihosting breakOnError 1",
+                "monitor semihosting IOClient 1",
+                "monitor semihosting enable"
+            ]
+        },
+        {
+            "name": "JLink Flash",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "tools/rp2040-flash",
+            "program": "${command:cmake.launchTargetPath}",
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
