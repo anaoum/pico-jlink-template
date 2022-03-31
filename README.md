@@ -39,7 +39,7 @@ You will need to allow the `.envrc` file to be run using:
 ```bash
 direnv allow
 ```
-The .envrc file defines the `PICO_SDK_PATH`, as well as some variables used when interacting with J-Link: `JL_DEVICE` and `JL_SPEED` (set to `RP2040_M0_0` and `15000` by default).
+The .envrc file defines the `PICO_SDK_PATH`, the `GNU_ARM_PATH`, as well as some variables used when interacting with J-Link.
 
 ### Visual Studio Code
 
