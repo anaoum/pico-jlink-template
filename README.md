@@ -10,7 +10,7 @@ This repository contains a sample project for programming the Raspberry Pi Pico 
     * [C/C++ Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 * [Arm GNU Toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain)
 
-As is, this template project is Mac-specific. However, little would need to change for use on other operating systems. Specifically just the paths to tools contained in `.vscode/*.json` and `tools/*`. I provide the Mac-specific instructions for installing dependencies below.
+As is, this template project is Mac-specific. However, little would need to change for use on other operating systems. Specifically just the paths contained in `.envrc`. I provide the Mac-specific instructions for installing dependencies below.
 
 ## Mac Dependencies
 
@@ -57,7 +57,7 @@ The project template includes four Debug launch configurations in .vscode/launch
 1. JLink GDB - Starts and connects to a JLinkGDBServer.
 2. JLink GDB (RTT) - Starts and connects to a JLinkGDBServer with RTT enabled (output in the VSCode Terminal/RTT pane)
 3. JLink GDB (Semihosting) - Starts and connects to a JLinkGDBServer with semihosting enabled (output on telnet port 3334)
-4. JLink Flash - Flashes the code using the script `tools/rp2040-flash` (which uses JLinkExe)
+4. JLink Flash - Flashes the code using the script `tools/jlink-flash`
 
 ### Command Line
 
@@ -73,7 +73,7 @@ make -C build -j8
 
 Flash:
 ```bash
-./tools/rp2040-flash build/hello.bin
+./tools/jlink-flash build/hello.bin
 ```
 
 For convenience, a Makefile is provided at the root folder to simplify the above commands to:
@@ -83,4 +83,5 @@ make flash
 
 #### CLI Debugging
 
-The script at `tools/rp2040-debug` starts a JLinkGDBServer and connects using the GDB command-line interface.
+* The script at `tools/jlink-debug` starts a JLinkGDBServer and connects using the GDB command-line interface.
+* The script at `tools/jlink-rtt` starts a JLink session and connects a JLinkRTTClient for viewing.

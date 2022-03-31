@@ -8,13 +8,14 @@ if [ ! -r "${1}" ]; then
     exit 1
 fi
 
-PORT=3333
+GDBPORT=3333
 TELNETPORT=3334
+SESSION="JLinkGDBServer.${RANDOM}"
 
-screen -S JLinkGDBServer -d -m /Applications/SEGGER/JLink/JLinkGDBServer -device $JL_DEVICE -if SWD -speed $JL_SPEED -port $PORT -ir -silent -nogui -localhostonly -singlerun -telnetport $TELNETPORT
+screen -S $SESSION -d -m "$JL_PATH/JLinkGDBServer" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED -port $GDBPORT -ir -silent -nogui -localhostonly -singlerun -telnetport $TELNETPORT
 
-arm-none-eabi-gdb --se "$1" \
-    -ex "target remote localhost:$PORT" \
+"$GNU_ARM_PATH/arm-none-eabi-gdb" --se "$1" \
+    -ex "target remote localhost:$GDBPORT" \
     -ex "monitor reset" \
     -ex "load" \
     -ex "monitor semihosting breakOnError 1" \
@@ -23,5 +24,5 @@ arm-none-eabi-gdb --se "$1" \
     -ex "break main" \
     -ex "monitor reset" \
     -ex "continue" \
-    -ex "layout src" || \
-screen -qr JLinkGDBServer
+    -ex "layout src" || true
+screen -qr $SESSION

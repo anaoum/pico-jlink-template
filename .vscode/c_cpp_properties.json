@@ -7,7 +7,7 @@
                 "${env:PICO_SDK_PATH}/**"
             ],
             "defines": [],
-            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+            "compilerPath": "${env:GNU_ARM_PATH}/arm-none-eabi-gcc",
             "cStandard": "gnu11",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "macos-gcc-arm",

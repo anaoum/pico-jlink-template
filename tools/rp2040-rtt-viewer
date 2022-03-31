@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-SESSION="JLinkRTTViewer.${RANDOM}"
-
-screen -S $SESSION -d -m /Applications/SEGGER/JLink/JLinkExe -Device $JL_DEVICE -If SWD -Speed $JL_SPEED -AutoConnect 1 -RTTTelnetPort 19021
-screen -m /Applications/SEGGER/JLink/JLinkRTTClientExe || true
-screen -r $SESSION -X quit

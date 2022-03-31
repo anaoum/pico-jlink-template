@@ -18,14 +18,14 @@ cmake: ${BUILD_DIR}/Makefile
 build: cmake
 	$(MAKE) -j ${PROCESSES} -C ${BUILD_DIR} --no-print-directory
 
-${BUILD_DIR}/${BUILD_NAME}.bin: build
+${BUILD_DIR}/${BUILD_NAME}.hex: build
 ${BUILD_DIR}/${BUILD_NAME}.elf: build
 
-flash: ${BUILD_DIR}/${BUILD_NAME}.bin
-	./tools/rp2040-flash ${BUILD_DIR}/${BUILD_NAME}.bin
+flash: ${BUILD_DIR}/${BUILD_NAME}.hex
+	./tools/jlink-flash ${BUILD_DIR}/${BUILD_NAME}.hex
 
 debug: ${BUILD_DIR}/${BUILD_NAME}.elf
-	./tools/rp2040-debug ${BUILD_DIR}/${BUILD_NAME}.elf
+	./tools/jlink-debug ${BUILD_DIR}/${BUILD_NAME}.elf
 
 clean:
 	rm -rf $(BUILD_DIR)

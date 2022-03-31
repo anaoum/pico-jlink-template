@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+TEMP=$(mktemp)
+
+cat > "$TEMP" <<EOF
+Reset
+Erase
+Reset
+Go
+Exit
+EOF
+"$JL_PATH/JLinkExe" -Device $JL_DEVICE -If $JL_IF -Speed $JL_SPEED -AutoConnect 1 -NoGui 1 -commanderscript "$TEMP" || true
+rm -f "$TEMP"

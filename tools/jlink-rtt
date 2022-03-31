@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+SESSION="JLinkRTTViewer.${RANDOM}"
+RTTPORT=3335
+
+screen -S $SESSION -d -m "$JL_PATH/JLinkExe" -Device $JL_DEVICE -If $JL_IF -Speed $JL_SPEED -AutoConnect 1 -RTTTelnetPort $RTTPORT
+screen -m "$JL_PATH/JLinkRTTClientExe" -RTTTelnetPort $RTTPORT || true
+screen -r $SESSION -X quit
