@@ -1,4 +1,4 @@
-# Raspberry Pi Pico/J-Link/CMake/VSCode Project Template
+# Raspberry Pi Pico/J-Link/CMake/VSCode Template
 
 This repository contains a sample project for programming the Raspberry Pi Pico (and all RP2040-based boards) using the following tool stack:
 * [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk)
@@ -10,7 +10,7 @@ This repository contains a sample project for programming the Raspberry Pi Pico 
     * [C/C++ Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 * [Arm GNU Toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain)
 
-As is, this template project is Mac-specific. However, little would need to change for use on other operating systems. Specifically just the paths to tools contained in `.vscode/*.json` and `tools/*.sh`. I provide the Mac-specific instructions for installing dependencies below.
+As is, this template project is Mac-specific. However, little would need to change for use on other operating systems. Specifically just the paths to tools contained in `.vscode/*.json` and `tools/*`. I provide the Mac-specific instructions for installing dependencies below.
 
 ## Mac Dependencies
 
@@ -48,16 +48,39 @@ Open the project folder using:
 code .
 ```
 
-If you have not used CMake Tools in VSCode before, you will be prompted to select the correct Kit. In our case, this is arm-none-eabi-gcc located in /opt/homebrew/bin. For more information, see the relevant documentation about [CMake Tools Kits](https://vector-of-bool.github.io/docs/vscode-cmake-tools/kits.html).
+If you have not used CMake Tools in VSCode before, you will be prompted to select the correct Kit. In our case, this is `arm-none-eabi-gcc` located in `/opt/homebrew/bin`. For more information, see the relevant documentation about [CMake Tools Kits](https://vector-of-bool.github.io/docs/vscode-cmake-tools/kits.html).
 
 You should now be able to build the project in VSCode using the relevant CMake commands.
 
-#### Debugging in VSCode
+#### VSCode Debugging
 The project template includes four Debug launch configurations in .vscode/launch.json:
-1. JLink GDB
-2. JLink GDB (RTT)
-3. JLink GDB (Semihosting)
-4. JLink Flash
+1. JLink GDB - Starts and connects to a JLinkGDBServer.
+2. JLink GDB (RTT) - Starts and connects to a JLinkGDBServer with RTT enabled (output in the VSCode Terminal/RTT pane)
+3. JLink GDB (Semihosting) - Starts and connects to a JLinkGDBServer with semihosting enabled (output on telnet port 3334)
+4. JLink Flash - Flashes the code using the script `tools/rp2040-flash` (which uses JLinkExe)
 
 ### Command Line
 
+To generate makefiles:
+```bash
+cmake -B build -S .
+```
+
+Build:
+```bash
+make -C build -j8
+```
+
+Flash:
+```bash
+./tools/rp2040-flash build/hello.bin
+```
+
+For convenience, a Makefile is provided at the root folder to simplify the above commands to:
+```bash
+make flash
+```
+
+#### CLI Debugging
+
+The script at `tools/rp2040-debug` starts a JLinkGDBServer and connects using the GDB command-line interface.
