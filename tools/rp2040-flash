@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+FILE="${1/%.elf/.bin}"
+
+if [ ! -r "${FILE}" ]; then
+    >&2 echo "Usage:"
+    >&2 echo "    ${0} program.bin"
+    exit 1
+fi
+
+TEMP=$(mktemp)
+
+cat > "$TEMP" <<EOF
+Device $JL_DEVICE
+SelectInterface SWD
+Speed $JL_SPEED
+Connect
+Reset
+LoadFile ${FILE} 0x10000000
+VerifyBin ${FILE} 0x10000000
+Reset
+Go
+Exit
+EOF
+/Applications/SEGGER/JLink/JLinkExe -commanderscript "$TEMP" || rm -f "$TEMP"

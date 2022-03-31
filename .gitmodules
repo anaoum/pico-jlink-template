@@ -1,0 +1,6 @@
+[submodule "pico-sdk"]
+	path = lib/pico-sdk
+	url = git@github.com:raspberrypi/pico-sdk.git
+[submodule "pico-stdio-rtt"]
+	path = lib/pico-stdio-rtt
+	url = git@github.com:anaoum/pico-stdio-rtt.git

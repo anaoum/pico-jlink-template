@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+if [ ! -r "${1}" ]; then
+    >&2 echo "Usage:"
+    >&2 echo "    ${0} program.elf"
+    exit 1
+fi
+
+PORT=3333
+TELNETPORT=3334
+
+screen -S JLinkGDBServer -d -m /Applications/SEGGER/JLink/JLinkGDBServer -device $JL_DEVICE -if SWD -speed $JL_SPEED -port $PORT -ir -silent -nogui -localhostonly -singlerun -telnetport $TELNETPORT
+
+arm-none-eabi-gdb --se "$1" \
+    -ex "target remote localhost:$PORT" \
+    -ex "monitor reset" \
+    -ex "load" \
+    -ex "monitor semihosting breakOnError 1" \
+    -ex "monitor semihosting IOClient 1" \
+    -ex "monitor semihosting enable" \
+    -ex "break main" \
+    -ex "monitor reset" \
+    -ex "continue" \
+    -ex "layout src" || \
+screen -qr JLinkGDBServer
