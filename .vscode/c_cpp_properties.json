@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Mac",
+            "name": "GNU ARM",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${env:PICO_SDK_PATH}/**"
@@ -10,7 +10,7 @@
             "compilerPath": "${env:GNU_ARM_PATH}/arm-none-eabi-gcc",
             "cStandard": "gnu11",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "macos-gcc-arm",
+            "intelliSenseMode": "gcc-arm",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
