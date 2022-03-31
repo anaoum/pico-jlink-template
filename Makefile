@@ -3,7 +3,7 @@
 PROCESSES := 8
 BUILD_DIR := build
 BUILD_TYPE ?= Debug
-BUILD_NAME := joylrs
+BUILD_NAME := hello
 
 all: build
 
@@ -18,14 +18,14 @@ cmake: ${BUILD_DIR}/Makefile
 build: cmake
 	$(MAKE) -j ${PROCESSES} -C ${BUILD_DIR} --no-print-directory
 
-${BUILD_DIR}/joylrs.bin: build
-${BUILD_DIR}/joylrs.elf: build
+${BUILD_DIR}/${BUILD_NAME}.bin: build
+${BUILD_DIR}/${BUILD_NAME}.elf: build
 
-flash: ${BUILD_DIR}/joylrs.bin
-	./tools/rp2040-flash ${BUILD_DIR}/joylrs.bin
+flash: ${BUILD_DIR}/${BUILD_NAME}.bin
+	./tools/rp2040-flash ${BUILD_DIR}/${BUILD_NAME}.bin
 
-debug: ${BUILD_DIR}/joylrs.elf
-	./tools/rp2040-debug ${BUILD_DIR}/joylrs.elf
+debug: ${BUILD_DIR}/${BUILD_NAME}.elf
+	./tools/rp2040-debug ${BUILD_DIR}/${BUILD_NAME}.elf
 
 clean:
 	rm -rf $(BUILD_DIR)
