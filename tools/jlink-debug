@@ -8,21 +8,24 @@ if [ ! -r "${1}" ]; then
     exit 1
 fi
 
-GDBPORT=3333
-TELNETPORT=3334
+for port in $(seq 3333 4444); do
+    nc -z 127.0.0.1 $port </dev/null &>/dev/null || { GDBPORT=$port; break; };
+done
+if [ -z "$GDBPORT" ]; then
+    >&2 echo "could not find an unused port for the gdb server"
+    exit 2
+fi
+
 SESSION="JLinkGDBServer.${RANDOM}"
 
-screen -S $SESSION -d -m "$JL_PATH/JLinkGDBServer" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED -port $GDBPORT -ir -silent -nogui -localhostonly -singlerun -telnetport $TELNETPORT
+screen -S $SESSION -d -m "$(dirname "$0")/jlink-gdb" $GDBPORT
 
 "$GNU_ARM_PATH/arm-none-eabi-gdb" --se "$1" \
     -ex "target remote localhost:$GDBPORT" \
     -ex "monitor reset" \
     -ex "load" \
-    -ex "monitor semihosting breakOnError 1" \
-    -ex "monitor semihosting IOClient 1" \
-    -ex "monitor semihosting enable" \
-    -ex "break main" \
     -ex "monitor reset" \
+    -ex "break main" \
     -ex "continue" \
     -ex "layout src" || true
-screen -qr $SESSION
+screen -qr $SESSION || true

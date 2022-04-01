@@ -73,7 +73,7 @@ make -C build -j8
 
 Flash:
 ```bash
-./tools/jlink-flash build/hello.bin
+./tools/jlink-flash build/hello.hex
 ```
 
 For convenience, a Makefile is provided at the root folder to simplify the above commands to:

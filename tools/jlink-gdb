@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -ne 1 ]; then
+    >&2 echo "Usage:"
+    >&2 echo "    ${0} GDBPORT"
+    exit 1
+fi
+
+env="$(dirname "$0")/../.envrc"
+source "$env" "$env"
+
+GDBPORT=$1
+
+"$JL_PATH/JLinkGDBServer" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED -port $GDBPORT -ir -silent -nogui -localhostonly -singlerun

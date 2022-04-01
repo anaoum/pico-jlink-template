@@ -7,16 +7,15 @@ BUILD_NAME := hello
 
 all: build
 
-${BUILD_DIR}/Makefile:
+${BUILD_DIR}/Makefile: CMakeLists.txt
 	cmake \
 		-B${BUILD_DIR} \
-		-DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+		-DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 
 cmake: ${BUILD_DIR}/Makefile
 
 build: cmake
-	$(MAKE) -j ${PROCESSES} -C ${BUILD_DIR} --no-print-directory
+	cmake --build ${BUILD_DIR} --target all -- -j ${PROCESSES}
 
 ${BUILD_DIR}/${BUILD_NAME}.hex: build
 ${BUILD_DIR}/${BUILD_NAME}.elf: build
