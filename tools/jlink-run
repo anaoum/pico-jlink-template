@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+FILE="${1/%.hex/.elf}"
+FILE="${FILE/%.bin/.elf}"
+
+if [ ! -r "${FILE}" ]; then
+    >&2 echo "Usage:"
+    >&2 echo "    ${0} program.elf"
+    exit 1
+fi
+
+env="$(dirname "$0")/../.envrc"
+source "$env" "$env"
+
+"$JL_PATH/JRunExe" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED --rtt --nosemihost --stderr --silent "$FILE" 2>&1 || true

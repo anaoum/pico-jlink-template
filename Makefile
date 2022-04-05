@@ -1,4 +1,4 @@
-.PHONY: all build cmake flash debug clean
+.PHONY: all cmake build erase run flash debug clean
 
 PROCESSES := 8
 BUILD_DIR := build
@@ -19,6 +19,12 @@ build: cmake
 
 ${BUILD_DIR}/${BUILD_NAME}.hex: build
 ${BUILD_DIR}/${BUILD_NAME}.elf: build
+
+erase:
+	./tools/jlink-erase
+
+run: ${BUILD_DIR}/${BUILD_NAME}.elf
+	./tools/jlink-run ${BUILD_DIR}/${BUILD_NAME}.elf
 
 flash: ${BUILD_DIR}/${BUILD_NAME}.hex
 	./tools/jlink-flash ${BUILD_DIR}/${BUILD_NAME}.hex

@@ -17,6 +17,7 @@ source "$env" "$env"
 cat <<EOF | "$JL_PATH/JLinkExe" -Device $JL_DEVICE -If $JL_IF -Speed $JL_SPEED -AutoConnect 1 -NoGui 1
 Reset
 LoadFile ${FILE}
+VerifyBin ${FILE/%.hex/.bin} 0x10000000
 Reset
 Go
 Exit
