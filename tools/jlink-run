@@ -14,4 +14,4 @@ fi
 env="$(dirname "$0")/../.envrc"
 source "$env" "$env"
 
-"$JL_PATH/JRunExe" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED --rtt --nosemihost --stderr --silent "$FILE" 2>&1 || true
+"$JL_PATH/JRunExe" -device $JL_DEVICE -if $JL_IF -speed $JL_SPEED --rtt --nosemihost --silent "$FILE" || true
